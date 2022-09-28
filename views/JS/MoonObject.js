@@ -1,5 +1,4 @@
 import "../style/style.css";
-
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
@@ -62,5 +61,16 @@ function animate() {
 
   renderer.render(scene, camera);
 }
+function addStar() {
+  const geom = new THREE.SphereGeometry(0.25, 24, 24);
+  const materials = new THREE.MeshStandardMaterial({ color: 0xffffff });
+  const star = new THREE.Mesh(geom, materials);
+  const [x, y, z] = Array(3)
+    .fill()
+    .map(() => THREE.MathUtils.randFloatSpread(1000));
+  star.position.set(x, y, z);
+  scene.add(star);
+}
+Array(300).fill().forEach(addStar);
 
 animate();
