@@ -38,7 +38,9 @@ const moon = new THREE.Mesh(moonShape, moonMaterial);
 
 // Memberi cahaya pada object
 const light = new THREE.PointLight(0xffffff);
-light.position.set(-40, 50, 10);
+const ambientLight = new THREE.AmbientLight(0xffffff);
+light.position.set(-30, 5, 5);
+// ambientLight.position.set(-100, -500, -300);
 scene.add(light, moon);
 
 // Untuk mengetahui posisi cahaya, dan memberikan grid
@@ -56,7 +58,6 @@ function animate() {
   moon.rotation.x += 0.001;
   moon.rotation.y += 0.00002;
   moon.rotation.z += 0.00003;
-
   controls.update();
 
   renderer.render(scene, camera);
