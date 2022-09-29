@@ -1,29 +1,9 @@
 import "../style/style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
-//Membuat scene
-const scene = new THREE.Scene();
-
-// Membuat camera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
-//render scene dan camera ke canvas dengan id bg
-const renderer = new THREE.WebGLRenderer({
-  canvas: document.querySelector("#bg"),
-});
-// optimisasi renderer dengan rasio window
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(30);
-
-// render object renderer
-
-renderer.render(scene, camera);
+import { renderer } from "../utils/renderer";
+import { scene } from "../utils/scene";
+import { camera } from "../utils/camera";
 
 // Membuat object moon dengan texture
 const moonShape = new THREE.SphereGeometry(15, 32, 16);
@@ -38,13 +18,13 @@ const moon = new THREE.Mesh(moonShape, moonMaterial);
 
 // Memberi cahaya pada object
 const light = new THREE.PointLight(0xffffff);
-const ambientLight = new THREE.AmbientLight(0xffffff);
+const ambientLight = new THREE.AmbientLight(0x222222);
 light.position.set(-30, 5, 5);
-// ambientLight.position.set(-100, -500, -300);
-scene.add(light, moon);
+
+scene.add(light, moon, ambientLight);
 
 // Untuk mengetahui posisi cahaya, dan memberikan grid
-const lightHelper = new THREE.PointLightHelper(light);
+const lightHelper = new THREE.PointLightHelper(ambientLight);
 const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(lightHelper);
 
@@ -62,6 +42,7 @@ function animate() {
 
   renderer.render(scene, camera);
 }
+
 function addStar() {
   const geom = new THREE.SphereGeometry(0.25, 24, 24);
   const materials = new THREE.MeshStandardMaterial({ color: 0xffffff });
