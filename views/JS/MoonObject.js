@@ -15,13 +15,14 @@ const moonMaterial = new THREE.MeshStandardMaterial({
 });
 //Object moon
 const moon = new THREE.Mesh(moonShape, moonMaterial);
-
+const moon2 = new THREE.Mesh(moonShape, moonMaterial);
+moon2.position.x = 90;
 // Memberi cahaya pada object
 const light = new THREE.PointLight(0xffffff);
 const ambientLight = new THREE.AmbientLight(0x222222);
-light.position.set(-30, 5, 5);
+light.position.set(-50, 5, 5);
 
-scene.add(light, moon, ambientLight);
+scene.add(light, moon, ambientLight, moon2);
 
 // Untuk mengetahui posisi cahaya, dan memberikan grid
 const lightHelper = new THREE.PointLightHelper(ambientLight);
@@ -34,10 +35,8 @@ const controls = new OrbitControls(camera, renderer.domElement);
 // fungsi untuk menganimasikan object moon
 function animate() {
   requestAnimationFrame(animate);
-
-  moon.rotation.x += 0.001;
-  moon.rotation.y += 0.00002;
-  moon.rotation.z += 0.00003;
+  moon.rotation.y += 0.002;
+  moon2.rotation.y += 0.003;
   controls.update();
 
   renderer.render(scene, camera);
