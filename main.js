@@ -1,1 +1,1 @@
-import "/views/JS/MoonObject.js";
+import "/views/JS/LandingPage.js";

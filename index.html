@@ -4,10 +4,54 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="main.css" rel="stylesheet" />
     <title>Vite App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:ital@1&family=Space+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .text-white {
+        color: white;
+      }
+      .font-exo {
+        font-family: "Exo 2", sans-serif;
+      }
+      .space-mono {
+        font-family: "Space Mono", monospace;
+      }
+    </style>
   </head>
   <body>
-    <canvas id="bg"></canvas>
+    <div class="landingPage">
+      <div
+        class="absolute text-white text-center z-40"
+        style="top: 50%; transform: translate(-50%, -50%); left: 50%"
+      >
+        <h1 class="space-mono text-sm uppercase tracking-wide">
+          ---Albert Einstein---
+        </h1>
+        <p class="font-exo text-3xl">
+          INSANITY IS DOING SOMETHING OVER AND OVER AND EXPECTING DIFFERENT
+          RESULTS
+        </p>
+        <button
+          class="border px-4 mt-8 py-2 rounded-lg text-sm space-mono uppercase hover:bg-black hover:text-white"
+          id="viewBtn"
+        >
+          View Work
+        </button>
+      </div>
+      <canvas id="bg" class="z-0"></canvas>
+    </div>
+
     <script type="module" src="/main.js"></script>
   </body>
 </html>
