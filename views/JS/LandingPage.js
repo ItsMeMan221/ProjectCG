@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { renderer } from "../utils/renderer";
 import { scene } from "../utils/scene";
 import { camera } from "../utils/camera";
+import { stars } from "../components/starLandingPage";
 import gsap from "gsap";
 
 //Detect Intersecting Object
@@ -23,7 +24,7 @@ frontLight.position.set(0, 1, 1);
 
 const backLight = new THREE.DirectionalLight(0xffffff, 1);
 backLight.position.set(0, 0, -1);
-scene.add(polygonMesh, frontLight, backLight);
+scene.add(polygonMesh, frontLight, backLight, stars);
 
 //Generate the poly like shape
 const { array } = polygonMesh.geometry.attributes.position;
@@ -132,21 +133,31 @@ addEventListener("mousemove", (event) => {
   mouse.y = -(event.clientY / innerHeight) * 2 + 1;
 });
 const element = document.getElementById("viewBtn");
+const op_all = document.getElementById("txtbut");
 element.addEventListener("click", viewWork);
 function viewWork() {
+  gsap.to(op_all, {
+    opacity: 0,
+    duration: 0.5,
+  });
   gsap.to(camera.position, {
     z: 3,
-    duration: 1.5,
+    delay: 0.5,
+    duration: 4,
   });
   gsap.to(camera.rotation, {
     x: 1.5,
-    duration: 1.5,
+    delay: 0.5,
+    duration: 4,
   });
   gsap.to(camera.position, {
-    y: 300,
-    duration: 3,
+    y: 400,
+    delay: 0.5,
+    duration: 4,
+    onComplete: goToNextPage,
   });
 }
+function goToNextPage() {
+  window.location = "./views/pages/planets.html";
+}
 animate();
-
-
