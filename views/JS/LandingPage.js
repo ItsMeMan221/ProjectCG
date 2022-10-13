@@ -54,7 +54,6 @@ polygonMesh.geometry.setAttribute(
   "color",
   new THREE.BufferAttribute(new Float32Array(colors), 3)
 );
-console.log(polygonMesh);
 //Init for normalizing mouse movement
 const mouse = {
   x: undefined,
@@ -149,3 +148,5 @@ function viewWork() {
   });
 }
 animate();
+
+
