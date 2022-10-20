@@ -10,7 +10,7 @@ export const sun = new THREE.Mesh(
     vertexShader,
     fragmentShader,
     uniforms: {
-      globeTexture: {
+      Texture: {
         value: new THREE.TextureLoader().load("../../assets/Texture/sun.jpg"),
       },
     },

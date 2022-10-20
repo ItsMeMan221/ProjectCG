@@ -20,8 +20,6 @@ scene.add(light, sun, ambientLight);
 const lightHelper = new THREE.PointLightHelper(ambientLight);
 scene.add(lightHelper);
 
-//User dapat menggerakkan scene
-
 // fungsi untuk menganimasikan object moon
 function animate() {
   requestAnimationFrame(animate);
