@@ -77,7 +77,7 @@ function animate() {
   renderer.render(scene, camera);
   raycaster.setFromCamera(mouse, camera);
 
-  // Set for intesecting object in polygonMesh
+  // Set for intersecting object in polygonMesh
   const intersects = raycaster.intersectObject(polygonMesh);
   if (intersects.length > 0) {
     const { color } = intersects[0].object.geometry.attributes;
@@ -157,6 +157,29 @@ function viewWork() {
     onComplete: goToNextPage,
   });
 }
+const listener = new THREE.AudioListener();
+camera.add(listener);
+const sound = new THREE.Audio(listener);
+const audioLoader = new THREE.AudioLoader();
+
+const playSound = document.getElementById("playSound");
+playSound.addEventListener("click", playsound);
+function playsound() {
+  audioLoader.load("../../assets/music/bgsound.mp3", function (buffer) {
+    if (sound.isPlaying == true) {
+      sound.stop();
+    } else {
+      sound.setBuffer(buffer);
+      sound.setLoop(true);
+      sound.setVolume(0.5);
+      sound.play();
+    }
+  });
+}
+
+// create a global audio source
+// load a sound and set it as the Audio object's buffer
+
 function goToNextPage() {
   window.location = "./views/pages/planets.html";
 }
