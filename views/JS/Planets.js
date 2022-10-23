@@ -1,32 +1,37 @@
+import * as THREE from "three";
+import { InteractionManager } from "three.interactive";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { renderer } from "../utils/renderer";
 import { scene } from "../utils/scene";
 import { camera } from "../utils/camera";
-import * as THREE from "three";
 import { sun } from "../components/sun";
-import { InteractionManager } from "three.interactive";
+import { mercury } from "../components/mercury";
+import { venus } from "../components/venus";
 // Memberi cahaya pada object
-const light = new THREE.PointLight(0xffffff);
-const ambientLight = new THREE.AmbientLight(0x222222);
-light.position.set(-50, 5, 5);
-camera.position.z = 900;
-camera.position.x = 100;
-sun.position.x = -900;
+
 const interactionManager = new InteractionManager(
   renderer,
   camera,
   renderer.domElement
 );
-interactionManager.add(sun);
-scene.add(sun);
+const controls = new OrbitControls(camera, renderer.domElement);
+//Set all position
+camera.position.z = 900;
+camera.position.x = 200;
+sun.position.x = -900;
+mercury.position.x = -400;
+venus.position.x = -200;
 
-// Untuk mengetahui posisi cahaya, dan memberikan grid
-const lightHelper = new THREE.PointLightHelper(ambientLight);
-scene.add(lightHelper);
+interactionManager.add(sun);
+scene.add(sun, mercury, venus);
 
 // fungsi untuk menganimasikan object moon
 function animate() {
   requestAnimationFrame(animate);
-  sun.rotation.y += 0.002;
+  mercury.rotation.y += 0.003;
+  venus.rotation.y += 0.003;
+
+  controls.update();
   interactionManager.update();
   renderer.render(scene, camera);
 }
