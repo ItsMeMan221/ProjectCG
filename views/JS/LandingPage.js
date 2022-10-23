@@ -164,12 +164,17 @@ const audioLoader = new THREE.AudioLoader();
 
 const playSound = document.getElementById("playSound");
 playSound.addEventListener("click", playsound);
+const iconSound = document.getElementById("icon-sound");
 function playsound() {
   audioLoader.load("../../assets/music/bgsound.mp3", function (buffer) {
     if (sound.isPlaying == true) {
       sound.stop();
+      iconSound.classList.remove("bi", "bi-volume-mute-fill");
+      iconSound.classList.add("bi", "bi-volume-up-fill");
     } else {
       sound.setBuffer(buffer);
+      iconSound.classList.remove("bi", "bi-volume-up-fill");
+      iconSound.classList.add("bi", "bi-volume-mute-fill");
       sound.setLoop(true);
       sound.setVolume(0.5);
       sound.play();
