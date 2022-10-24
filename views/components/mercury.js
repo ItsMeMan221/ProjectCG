@@ -15,6 +15,19 @@ export const mercury = new THREE.Mesh(
           "../../assets/Texture/mercury.jpg"
         ),
       },
+      color: { value: new THREE.Color(0xffffff) },
+      lightDirection: {
+        value: new THREE.Vector3(-1.0, -1.0, 1.0).normalize(),
+      },
     },
   })
 );
+
+// const sunShape = new THREE.SphereGeometry(32, 60, 60);
+// const sunTexture = new THREE.TextureLoader().load(
+//   "../../assets/Texture/mercury.jpg"
+// );
+// const sunMaterial = new THREE.MeshStandardMaterial({
+//   map: sunTexture,
+// });
+// export const mercury = new THREE.Mesh(sunShape, sunMaterial);
