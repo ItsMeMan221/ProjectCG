@@ -5,6 +5,7 @@ import { renderer } from "../utils/renderer";
 import { scene } from "../utils/scene";
 import { camera } from "../utils/camera";
 import { sun } from "../components/sun";
+import { stars } from "../components/starPlanets";
 import { mercury } from "../components/mercury";
 import { venus } from "../components/venus";
 // Memberi cahaya pada object
@@ -23,7 +24,7 @@ mercury.position.x = -400;
 venus.position.x = -200;
 
 interactionManager.add(sun);
-scene.add(sun, mercury, venus);
+scene.add(sun, mercury, venus, stars);
 
 // fungsi untuk menganimasikan object moon
 function animate() {
