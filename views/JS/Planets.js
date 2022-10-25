@@ -1,33 +1,65 @@
+//Import all library
+import * as THREE from "three";
+import { InteractionManager } from "three.interactive";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+
+//Import all utils
 import { renderer } from "../utils/renderer";
 import { scene } from "../utils/scene";
 import { camera } from "../utils/camera";
-import * as THREE from "three";
+import { dirLight, ambLight, pntLight, hempLight } from "../utils/light";
+
+//Import all components
 import { sun } from "../components/sun";
+
 import { earth } from "../components/earth";
 // Membuat object moon dengan texture
 
-//Object sun
+import { stars } from "../components/starPlanets";
+import { mercury } from "../components/mercury";
+import { venus } from "../components/venus";
 
-// Memberi cahaya pada object
-const light = new THREE.PointLight(0xffffff);
-const ambientLight = new THREE.AmbientLight(0x222222);
-light.position.set(-50, 5, 5);
+// Init for interaction manager
+const interactionManager = new InteractionManager(renderer, camera, renderer.domElement);
+// Init for orbit controls
+const controls = new OrbitControls(camera, renderer.domElement);
+//Set all position of utils and components
 camera.position.z = 900;
-camera.position.x = 100;
-earth.position.x = -500;
+
+camera.position.x = 200;
 sun.position.x = -900;
-scene.add(light, earth, sun, ambientLight);
+mercury.position.x = -400;
+venus.position.x = -200;
+dirLight.position.x = -900;
+pntLight.position.x = -900;
 
-// Untuk mengetahui posisi cahaya, dan memberikan grid
-const lightHelper = new THREE.PointLightHelper(ambientLight);
-scene.add(lightHelper);
+// Adding mesh to interaction manager
+interactionManager.add(sun);
 
-// fungsi untuk menganimasikan object moon
+// Adding all utils and components
+scene.add(pntLight, dirLight, ambLight, hempLight, sun, mercury, venus, earth, stars);
+
+// Animate all components
 function animate() {
   requestAnimationFrame(animate);
+
   earth.rotation.y += 0.005;
   sun.rotation.y += 0.002;
+
+  mercury.rotation.y += 0.003;
+  venus.rotation.y += 0.003;
+
+  // update controls and interaction manager
+  controls.update();
+  interactionManager.update();
+
+  // render the scene and camera
+
   renderer.render(scene, camera);
 }
 
+// click event on sun mesh
+sun.addEventListener("click", (event) => {
+  console.log("Hello World");
+});
 animate();

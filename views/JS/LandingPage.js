@@ -35,9 +35,9 @@ for (let i = 0; i < array.length; i++) {
     const y = array[i + 1];
     const z = array[i + 2];
 
-    array[i] = x + Math.random() * -6 * 3;
-    array[i + 2] = z + Math.random() * -6 * 3;
-    array[i + 1] = y + Math.random() * -6 * 3;
+    array[i] = x + Math.random() * -3 * 5;
+    array[i + 2] = z + Math.random() * -3 * 5;
+    array[i + 1] = y + Math.random() * -3 * 5;
   }
   randomValue.push(Math.random() * Math.PI * 2);
 }
@@ -67,7 +67,7 @@ function animate() {
   frame += 0.01;
   const { array, originalPosition, randomValue } =
     polygonMesh.geometry.attributes.position;
-  //Loop for polygon to move forward and back using sinus and cosinus
+  //Loop for polygon to move forward and back using sinus and cosines
   for (let i = 0; i < array.length; i += 3) {
     array[i] = originalPosition[i] + Math.cos(frame + randomValue[i]) * 0.003;
     array[i + 1] =
@@ -77,7 +77,7 @@ function animate() {
   renderer.render(scene, camera);
   raycaster.setFromCamera(mouse, camera);
 
-  // Set for intesecting object in polygonMesh
+  // Set for intersecting object in polygonMesh
   const intersects = raycaster.intersectObject(polygonMesh);
   if (intersects.length > 0) {
     const { color } = intersects[0].object.geometry.attributes;
@@ -157,6 +157,33 @@ function viewWork() {
     onComplete: goToNextPage,
   });
 }
+
+//Audio
+const listener = new THREE.AudioListener();
+camera.add(listener);
+const sound = new THREE.Audio(listener);
+const audioLoader = new THREE.AudioLoader();
+
+const playSound = document.getElementById("playSound");
+playSound.addEventListener("click", playsound);
+const iconSound = document.getElementById("icon-sound");
+function playsound() {
+  audioLoader.load("../../assets/music/bgsound.mp3", function (buffer) {
+    if (sound.isPlaying == true) {
+      sound.stop();
+      iconSound.classList.remove("bi", "bi-volume-mute-fill");
+      iconSound.classList.add("bi", "bi-volume-up-fill");
+    } else {
+      sound.setBuffer(buffer);
+      iconSound.classList.remove("bi", "bi-volume-up-fill");
+      iconSound.classList.add("bi", "bi-volume-mute-fill");
+      sound.setLoop(true);
+      sound.setVolume(0.5);
+      sound.play();
+    }
+  });
+}
+
 function goToNextPage() {
   window.location = "./views/pages/planets.html";
 }

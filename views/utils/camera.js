@@ -1,8 +1,7 @@
 import * as THREE from "three";
 export const camera = new THREE.PerspectiveCamera(
-  75,
+  45,
   window.innerWidth / window.innerHeight,
-  0.1,
-  1000
+  0.05,
+  5 * Math.pow(10, 13)
 );
-camera.position.setZ(90);
