@@ -56,8 +56,7 @@ scene.add(
 function animate() {
   requestAnimationFrame(animate);
 
-  earth.rotation.y += 0.005;
-  sun.rotation.y += 0.002;
+  earth.rotation.y += 0.002;
 
   mercury.rotation.y += 0.003;
   venus.rotation.y += 0.003;

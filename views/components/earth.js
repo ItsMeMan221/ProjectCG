@@ -1,18 +1,27 @@
 import * as THREE from "three";
+import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 //Import Shaders
 import vertexShader from "../shaders/earth/vertex.glsl";
 import fragmentShader from "../shaders/earth/fragment.glsl";
-
-//Object Using shader material
-export const earth = new THREE.Mesh(
-  new THREE.SphereGeometry(75, 65, 65),
-  new THREE.ShaderMaterial({
-    vertexShader,
-    fragmentShader,
-    uniforms: {
-      Texture: {
-        value: new THREE.TextureLoader().load("../../assets/Texture/globe.jpg"),
-      },
-    },
-  })
+// Shape of earth
+const earthShape = new THREE.SphereGeometry(37.9, 65, 65);
+//earth Texture
+const earthTexture = new THREE.TextureLoader().load(
+  "../../assets/Texture/globe.jpg"
 );
+// earth Material
+const earthMaterial = new CustomShaderMaterial({
+  baseMaterial: THREE.MeshPhysicalMaterial,
+  vertexShader,
+  fragmentShader,
+  uniforms: {
+    uTime: {
+      value: 0,
+    },
+    Texture: {
+      value: earthTexture,
+    },
+  },
+});
+//Mesh all together
+export const earth = new THREE.Mesh(earthShape, earthMaterial);
