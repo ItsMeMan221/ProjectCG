@@ -13,14 +13,17 @@ import { dirLight, ambLight, pntLight, hempLight } from "../utils/light";
 import { sun } from "../components/sun";
 
 import { earth } from "../components/earth";
-// Membuat object moon dengan texture
 
 import { stars } from "../components/starPlanets";
 import { mercury } from "../components/mercury";
 import { venus } from "../components/venus";
 
 // Init for interaction manager
-const interactionManager = new InteractionManager(renderer, camera, renderer.domElement);
+const interactionManager = new InteractionManager(
+  renderer,
+  camera,
+  renderer.domElement
+);
 // Init for orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
 //Set all position of utils and components
@@ -37,7 +40,17 @@ pntLight.position.x = -900;
 interactionManager.add(sun);
 
 // Adding all utils and components
-scene.add(pntLight, dirLight, ambLight, hempLight, sun, mercury, venus, earth, stars);
+scene.add(
+  pntLight,
+  dirLight,
+  ambLight,
+  hempLight,
+  sun,
+  mercury,
+  venus,
+  earth,
+  stars
+);
 
 // Animate all components
 function animate() {

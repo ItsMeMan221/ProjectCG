@@ -5,7 +5,7 @@ import fragmentShader from "../shaders/sun/fragment.glsl";
 
 //Object Using shader material
 export const sun = new THREE.Mesh(
-  new THREE.SphereGeometry(100, 65, 65),
+  new THREE.SphereGeometry(200, 65, 65),
   new THREE.ShaderMaterial({
     vertexShader,
     fragmentShader,

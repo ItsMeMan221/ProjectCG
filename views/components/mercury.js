@@ -22,12 +22,3 @@ export const mercury = new THREE.Mesh(
     },
   })
 );
-
-// const sunShape = new THREE.SphereGeometry(32, 60, 60);
-// const sunTexture = new THREE.TextureLoader().load(
-//   "../../assets/Texture/mercury.jpg"
-// );
-// const sunMaterial = new THREE.MeshStandardMaterial({
-//   map: sunTexture,
-// });
-// export const mercury = new THREE.Mesh(sunShape, sunMaterial);

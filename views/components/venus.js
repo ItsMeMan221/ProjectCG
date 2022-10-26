@@ -15,7 +15,6 @@ const venusMaterial = new CustomShaderMaterial({
   baseMaterial: THREE.MeshPhysicalMaterial,
   vertexShader,
   fragmentShader,
-
   uniforms: {
     uTime: {
       value: 0,
