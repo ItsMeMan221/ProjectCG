@@ -17,13 +17,23 @@ import { earth } from "../components/earth";
 import { stars } from "../components/starPlanets";
 import { mercury } from "../components/mercury";
 import { venus } from "../components/venus";
+import { saturn } from "../components/saturn";
+import { neptune } from "../components/neptune";
 
+const rotationSpeed = 0.09;
+let clock = new THREE.Clock();
+
+earth.rotation.x = (13 / 100) * Math.PI;
+venus.rotation.x = (4.8 / 100) * Math.PI;
+saturn.rotation.x = (14.8 / 100) * Math.PI;
+neptune.rotation.x = (15.75 / 100) * Math.PI;
 // Init for interaction manager
 const interactionManager = new InteractionManager(
   renderer,
   camera,
   renderer.domElement
 );
+
 // Init for orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
 //Set all position of utils and components
@@ -33,6 +43,8 @@ sun.position.x = -900;
 mercury.position.x = -400;
 venus.position.x = -200;
 earth.position.x = 0;
+saturn.position.x = 400;
+neptune.position.x = 800;
 dirLight.position.x = -900;
 pntLight.position.x = -900;
 
@@ -42,24 +54,28 @@ interactionManager.add(sun);
 // Adding all utils and components
 scene.add(
   pntLight,
-  dirLight,
+
   ambLight,
   hempLight,
   sun,
   mercury,
   venus,
   earth,
+  saturn,
+  neptune,
   stars
 );
 
 // Animate all components
 function animate() {
+  let delta = clock.getDelta();
   requestAnimationFrame(animate);
 
-  earth.rotation.y += 0.002;
-
-  mercury.rotation.y += 0.003;
-  venus.rotation.y += 0.003;
+  mercury.rotation.y += (rotationSpeed * delta) / 0.5;
+  venus.rotation.y += (rotationSpeed * delta) / 1;
+  earth.rotation.y += rotationSpeed * delta * 3;
+  saturn.children[0].rotation.y += rotationSpeed * delta * 6.5;
+  neptune.rotation.y += rotationSpeed * delta * 4.5;
 
   // update controls and interaction manager
   controls.update();

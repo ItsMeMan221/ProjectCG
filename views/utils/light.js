@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 //intensity of light
-const intensity = { amb: 0.2, dir: 0.8 };
+const intensity = { amb: 0.2, dir: 0.8, pnt: 2 };
 
 // directional light
 export const dirLight = new THREE.DirectionalLight(0xffffff, intensity.dir);
@@ -10,11 +10,11 @@ export const dirLight = new THREE.DirectionalLight(0xffffff, intensity.dir);
 export const ambLight = new THREE.AmbientLight(0x222222, intensity.amb);
 
 // point light
-const pl = { power: 2, decay: 0.2 };
+const pl = { power: 2, decay: 3 };
 export const pntLight = new THREE.PointLight(
   0xffffff,
   intensity.pnt,
-  1000,
+  4 * Math.pow(2, 10),
   pl.decay
 );
 
