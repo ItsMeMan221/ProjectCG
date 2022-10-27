@@ -28,11 +28,11 @@ const interactionManager = new InteractionManager(
 const controls = new OrbitControls(camera, renderer.domElement);
 //Set all position of utils and components
 camera.position.z = 900;
-
 camera.position.x = 200;
 sun.position.x = -900;
 mercury.position.x = -400;
 venus.position.x = -200;
+earth.position.x = 0;
 dirLight.position.x = -900;
 pntLight.position.x = -900;
 
