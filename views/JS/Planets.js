@@ -2,7 +2,7 @@
 import * as THREE from "three";
 import { InteractionManager } from "three.interactive";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
+import gsap from "gsap";
 //Import all utils
 import { renderer } from "../utils/renderer";
 import { scene } from "../utils/scene";
@@ -22,6 +22,8 @@ import { neptune } from "../components/neptune";
 
 const rotationSpeed = 0.09;
 let clock = new THREE.Clock();
+let coorPlanet = new THREE.Vector3();
+let coorCamera = new THREE.Vector3();
 
 earth.rotation.x = (13 / 100) * Math.PI;
 venus.rotation.x = (4.8 / 100) * Math.PI;
@@ -50,7 +52,8 @@ pntLight.position.x = -900;
 
 // Adding mesh to interaction manager
 interactionManager.add(sun);
-
+interactionManager.add(mercury);
+interactionManager.add(venus);
 // Adding all utils and components
 scene.add(
   pntLight,
@@ -68,9 +71,9 @@ scene.add(
 
 // Animate all components
 function animate() {
+  coorCamera = coorObj(camera);
   let delta = clock.getDelta();
   requestAnimationFrame(animate);
-
   mercury.rotation.y += (rotationSpeed * delta) / 0.5;
   venus.rotation.y += (rotationSpeed * delta) / 1;
   earth.rotation.y += rotationSpeed * delta * 3;
@@ -88,6 +91,58 @@ function animate() {
 
 // click event on sun mesh
 sun.addEventListener("click", (event) => {
-  console.log("Hello World");
+  let coorSun = coorObj(sun);
+  gsap.to(camera.position, {
+    x: coorSun.x - 900,
+    duration: 3,
+  });
+  gsap.to(camera.position, {
+    y: coorSun.y,
+    duration: 3,
+  });
+  gsap.to(camera.position, {
+    z: coorSun.z - 250,
+    duration: 3,
+  });
+});
+
+mercury.addEventListener("click", (event) => {
+  let coorMercury = coorObj(mercury);
+  gsap.to(camera.position, {
+    x: coorMercury.x - 300,
+    duration: 3,
+  });
+  gsap.to(camera.position, {
+    y: coorMercury.y,
+    duration: 3,
+  });
+  gsap.to(camera.position, {
+    z: coorMercury.z - 100,
+    duration: 3,
+  });
+});
+
+venus.addEventListener("click", (event) => {
+  let coorVenus = coorObj(venus);
+  gsap.to(camera.position, {
+    x: coorVenus.x - 130,
+    duration: 3,
+  });
+  gsap.to(camera.position, {
+    y: coorVenus.y,
+    duration: 3,
+  });
+  gsap.to(camera.position, {
+    z: coorVenus.z - 100,
+    duration: 3,
+  });
 });
 animate();
+
+function coorObj(obj) {
+  let pl = new THREE.Vector3();
+
+  pl = obj.position;
+
+  return pl;
+}
