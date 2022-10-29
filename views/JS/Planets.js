@@ -54,10 +54,10 @@ pntLight.position.x = -900;
 interactionManager.add(sun);
 interactionManager.add(mercury);
 interactionManager.add(venus);
+interactionManager.add(earth);
 // Adding all utils and components
 scene.add(
   pntLight,
-
   ambLight,
   hempLight,
   sun,
@@ -125,7 +125,7 @@ mercury.addEventListener("click", (event) => {
 venus.addEventListener("click", (event) => {
   let coorVenus = coorObj(venus);
   gsap.to(camera.position, {
-    x: coorVenus.x - 130,
+    x: coorVenus.x - 150,
     duration: 3,
   });
   gsap.to(camera.position, {
@@ -133,7 +133,22 @@ venus.addEventListener("click", (event) => {
     duration: 3,
   });
   gsap.to(camera.position, {
-    z: coorVenus.z - 100,
+    z: coorVenus.z - 80,
+    duration: 3,
+  });
+});
+earth.addEventListener("click", (event) => {
+  let coorEarth = coorObj(earth);
+  gsap.to(camera.position, {
+    x: coorEarth.x - 200,
+    duration: 3,
+  });
+  gsap.to(camera.position, {
+    y: coorEarth.y,
+    duration: 3,
+  });
+  gsap.to(camera.position, {
+    z: coorEarth.z - 100,
     duration: 3,
   });
 });

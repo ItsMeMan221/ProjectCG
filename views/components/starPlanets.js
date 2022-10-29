@@ -6,7 +6,7 @@ const starVertices = [];
 for (let i = 0; i < 1000; i++) {
   const x = (Math.random() - 0.5) * 4700;
   const y = (Math.random() - 0.5) * 4500;
-  const z = Math.random() * 3300;
+  const z = -Math.random() * 3300;
   starVertices.push(x, y, z);
 }
 starGeometry.setAttribute(
