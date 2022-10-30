@@ -12,9 +12,6 @@ const jupiterMaterial = new CustomShaderMaterial({
   baseMaterial: THREE.MeshPhysicalMaterial,
   vertexShader,
   fragmentShader,
-  side: THREE.DoubleSide,
-  transparent: false,
-  color: 0xff00ff,
   uniforms: {
     uTime: {
       value: 0,
@@ -24,29 +21,6 @@ const jupiterMaterial = new CustomShaderMaterial({
     },
   },
 });
-const planet = new THREE.Mesh(jupiterShape, jupiterMaterial);
 
-const ringGeometry = new THREE.RingGeometry(197, 150, 180);
-
-const posGeom = ringGeometry.attributes.position;
-
-const v3Geom = new THREE.Vector3();
-
-for (let i = 0; i < posGeom.count; i++) {
-  v3Geom.fromBufferAttribute(posGeom, i);
-  ringGeometry.attributes.uv.setXY(i, v3Geom.length() < 119 ? 0 : 1, 1);
-}
-const ringTex = new THREE.TextureLoader().load("../../assets/Texture/saturn_ring.png");
-
-const ringMaterial = new THREE.MeshBasicMaterial({
-  map: ringTex,
-  color: 0xffffff,
-  side: THREE.DoubleSide,
-  transparent: true,
-});
-
-const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-ring.rotation.x = 80;
-//Group all together
-export const jupiter = new THREE.Group();
-jupiter.add(planet, ring);
+//mesh shape and material
+export const jupiter = new THREE.Mesh(jupiterShape, jupiterMaterial);
