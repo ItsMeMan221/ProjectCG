@@ -35,9 +35,9 @@ for (let i = 0; i < array.length; i++) {
     const y = array[i + 1];
     const z = array[i + 2];
 
-    array[i] = x + Math.random() * -6 * 3;
-    array[i + 2] = z + Math.random() * -6 * 3;
-    array[i + 1] = y + Math.random() * -6 * 3;
+    array[i] = x + Math.random() * -3 * 5;
+    array[i + 2] = z + Math.random() * -3 * 5;
+    array[i + 1] = y + Math.random() * -3 * 5;
   }
   randomValue.push(Math.random() * Math.PI * 2);
 }
@@ -67,7 +67,7 @@ function animate() {
   frame += 0.01;
   const { array, originalPosition, randomValue } =
     polygonMesh.geometry.attributes.position;
-  //Loop for polygon to move forward and back using sinus and cosinus
+  //Loop for polygon to move forward and back using sinus and cosines
   for (let i = 0; i < array.length; i += 3) {
     array[i] = originalPosition[i] + Math.cos(frame + randomValue[i]) * 0.003;
     array[i + 1] =
@@ -157,6 +157,8 @@ function viewWork() {
     onComplete: goToNextPage,
   });
 }
+
+//Audio
 const listener = new THREE.AudioListener();
 camera.add(listener);
 const sound = new THREE.Audio(listener);
@@ -181,9 +183,6 @@ function playsound() {
     }
   });
 }
-
-// create a global audio source
-// load a sound and set it as the Audio object's buffer
 
 function goToNextPage() {
   window.location = "./views/pages/planets.html";
