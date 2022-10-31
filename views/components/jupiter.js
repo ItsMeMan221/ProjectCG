@@ -4,9 +4,11 @@ import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 import vertexShader from "../shaders/jupiter/vertex.glsl";
 import fragmentShader from "../shaders/jupiter/fragment.glsl";
 // Shape of jupiter
-const jupiterShape = new THREE.SphereGeometry(149, 89, 97);
+const jupiterShape = new THREE.SphereGeometry(110, 89, 97);
 //jupiter Texture
-const jupiterTexture = new THREE.TextureLoader().load("../../assets/Texture/8k_jupiter.jpg");
+const jupiterTexture = new THREE.TextureLoader().load(
+  "../../assets/Texture/jupiter.jpg"
+);
 // jupiter Material
 const jupiterMaterial = new CustomShaderMaterial({
   baseMaterial: THREE.MeshPhysicalMaterial,
