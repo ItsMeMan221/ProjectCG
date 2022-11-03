@@ -1,21 +1,20 @@
 import * as THREE from "three";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
-
+import { loadingManager } from "../utils/LoadingManager";
 //Import Shaders
 import vertexShader from "../shaders/vertex.glsl";
 import fragmentShader from "../shaders/fragment.glsl";
 
 // all of planets
+const textureLoader = new THREE.TextureLoader(loadingManager);
 
 // Shape of mercury
 const mercuryShape = new THREE.SphereGeometry(30, 60, 60);
 //mercury Texture
-const mercuryTexture = new THREE.TextureLoader().load(
-  "../../assets/Texture/mercury.jpg"
-);
+const mercuryTexture = textureLoader.load("../../assets/Texture/mercury.jpg");
 // mercury Material
 const mercuryMaterial = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhysicalMaterial,
+  baseMaterial: THREE.MeshStandardMaterial,
   vertexShader,
   fragmentShader,
   uniforms: {
@@ -31,12 +30,10 @@ const mercuryMaterial = new CustomShaderMaterial({
 // Shape of venus
 const venusShape = new THREE.SphereGeometry(36, 60, 60);
 //Venus Texture
-const venusTexture = new THREE.TextureLoader().load(
-  "../../assets/Texture/venus.jpg"
-);
+const venusTexture = textureLoader.load("../../assets/Texture/venus.jpg");
 // Venus Material
 const venusMaterial = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhysicalMaterial,
+  baseMaterial: THREE.MeshStandardMaterial,
   vertexShader,
   fragmentShader,
   uniforms: {
@@ -52,12 +49,10 @@ const venusMaterial = new CustomShaderMaterial({
 // Shape of earth
 const earthShape = new THREE.SphereGeometry(37.9, 65, 65);
 //earth Texture
-const earthTexture = new THREE.TextureLoader().load(
-  "../../assets/Texture/globe.jpg"
-);
+const earthTexture = textureLoader.load("../../assets/Texture/globe.jpg");
 // earth Material
 const earthMaterial = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhysicalMaterial,
+  baseMaterial: THREE.MeshStandardMaterial,
   vertexShader,
   fragmentShader,
   uniforms: {
@@ -73,12 +68,10 @@ const earthMaterial = new CustomShaderMaterial({
 // Shape of mars
 const marsShape = new THREE.SphereGeometry(32, 105, 30);
 //mars Texture
-const marsTexture = new THREE.TextureLoader().load(
-  "../../assets/Texture/mars.jpg"
-);
+const marsTexture = textureLoader.load("../../assets/Texture/mars.jpg");
 // mars Material
 const marsMaterial = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhysicalMaterial,
+  baseMaterial: THREE.MeshStandardMaterial,
   vertexShader,
   fragmentShader,
   uniforms: {
@@ -94,12 +87,10 @@ const marsMaterial = new CustomShaderMaterial({
 // Shape of jupiter
 const jupiterShape = new THREE.SphereGeometry(80, 89, 97);
 //jupiter Texture
-const jupiterTexture = new THREE.TextureLoader().load(
-  "../../assets/Texture/jupiter.jpg"
-);
+const jupiterTexture = textureLoader.load("../../assets/Texture/jupiter.jpg");
 // jupiter Material
 const jupiterMaterial = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhysicalMaterial,
+  baseMaterial: THREE.MeshStandardMaterial,
   vertexShader,
   fragmentShader,
   uniforms: {
@@ -115,12 +106,10 @@ const jupiterMaterial = new CustomShaderMaterial({
 // Shape of saturn
 const saturnShape = new THREE.SphereGeometry(70, 65, 65);
 //saturn Texture
-const saturnTexture = new THREE.TextureLoader().load(
-  "../../assets/Texture/saturn.jpg"
-);
+const saturnTexture = textureLoader.load("../../assets/Texture/saturn.jpg");
 // saturn Material
 const saturnMaterial = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhysicalMaterial,
+  baseMaterial: THREE.MeshStandardMaterial,
   vertexShader,
   fragmentShader,
   side: THREE.DoubleSide,
@@ -146,9 +135,7 @@ for (let i = 0; i < posGeom.count; i++) {
   v3Geom.fromBufferAttribute(posGeom, i);
   ringGeometry.attributes.uv.setXY(i, v3Geom.length() < 119 ? 0 : 1, 1);
 }
-const ringTex = new THREE.TextureLoader().load(
-  "../../assets/Texture/saturn_ring.png"
-);
+const ringTex = textureLoader.load("../../assets/Texture/saturn_ring.png");
 
 const ringMaterial = new THREE.MeshBasicMaterial({
   map: ringTex,
@@ -163,12 +150,10 @@ ring.rotation.x = 80;
 // Shape of uranus
 const uranusShape = new THREE.SphereGeometry(50, 65, 65);
 //uranus Texture
-const uranusTexture = new THREE.TextureLoader().load(
-  "../../assets/Texture/uranus.jpg"
-);
+const uranusTexture = textureLoader.load("../../assets/Texture/uranus.jpg");
 // uranus Material
 const uranusMaterial = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhysicalMaterial,
+  baseMaterial: THREE.MeshStandardMaterial,
   vertexShader,
   fragmentShader,
   uniforms: {
@@ -183,12 +168,10 @@ const uranusMaterial = new CustomShaderMaterial({
 // Shape of neptune
 const neptuneShape = new THREE.SphereGeometry(49.5, 60, 60);
 //neptune Texture
-const neptuneTexture = new THREE.TextureLoader().load(
-  "../../assets/Texture/neptune.jpg"
-);
+const neptuneTexture = textureLoader.load("../../assets/Texture/neptune.jpg");
 // neptune Material
 const neptuneMaterial = new CustomShaderMaterial({
-  baseMaterial: THREE.MeshPhysicalMaterial,
+  baseMaterial: THREE.MeshStandardMaterial,
   vertexShader,
   fragmentShader,
   uniforms: {

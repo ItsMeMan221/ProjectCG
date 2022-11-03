@@ -8,7 +8,13 @@ import { renderer } from "../utils/renderer";
 import { scene } from "../utils/scene";
 import { camera } from "../utils/camera";
 import { dirLight, ambLight, pntLight, hempLight } from "../utils/light";
+import { loadingManager } from "../utils/LoadingManager";
 
+import Stats from "stats.js";
+
+const stats = new Stats();
+stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild(stats.dom);
 //Import all components
 import { sun } from "../components/sun";
 import {
@@ -25,8 +31,6 @@ import { stars } from "../components/starPlanets";
 
 const rotationSpeed = 0.09;
 let clock = new THREE.Clock();
-let coorPlanet = new THREE.Vector3();
-let coorCamera = new THREE.Vector3();
 
 //Angle of planets
 venus.rotation.x = (4.8 / 100) * Math.PI;
@@ -42,6 +46,13 @@ const interactionManager = new InteractionManager(
   camera,
   renderer.domElement
 );
+const tick = () => {
+  stats.begin();
+
+  // ...
+
+  stats.end();
+};
 
 // Init for orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -88,7 +99,6 @@ scene.add(
 
 // Animate all components
 function animate() {
-  coorCamera = coorObj(camera);
   let delta = clock.getDelta();
   requestAnimationFrame(animate);
 
@@ -109,6 +119,7 @@ function animate() {
   // render the scene and camera
 
   renderer.render(scene, camera);
+  tick();
 }
 
 // click event on sun mesh
@@ -182,4 +193,15 @@ function coorObj(obj) {
   pl = obj.position;
 
   return pl;
+}
+
+//Loading Manager
+loadingManager.onLoad = function () {
+  const loadingScreen = document.getElementById("loading-screen");
+  loadingScreen.classList.add("fade-out");
+  loadingScreen.addEventListener("transitionend", onTransitionEnd);
+};
+
+function onTransitionEnd(event) {
+  event.target.remove();
 }
