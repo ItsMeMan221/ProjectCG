@@ -59,8 +59,10 @@ const tick = () => {
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enablePan = false;
 //Set all position of utils and components
-camera.position.z = 900;
-camera.position.x = 200;
+camera.position.z = 1411.0537416811678;
+camera.position.y = 704.7150454413226;
+camera.position.x = -373.55482345690655;
+
 dirLight.position.x = -900;
 pntLight.position.x = -900;
 
