@@ -29,6 +29,7 @@ import {
 } from "../components/ExoPlanets";
 import { stars } from "../components/starPlanets";
 
+let infoId = document.getElementById("info");
 const rotationSpeed = 0.09;
 let clock = new THREE.Clock();
 
@@ -56,7 +57,7 @@ const tick = () => {
 
 // Init for orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
-// controls.enablePan = false;
+controls.enablePan = false;
 //Set all position of utils and components
 camera.position.z = 900;
 camera.position.x = 200;
@@ -79,6 +80,11 @@ interactionManager.add(sun);
 interactionManager.add(mercury);
 interactionManager.add(venus);
 interactionManager.add(earth);
+interactionManager.add(mars);
+interactionManager.add(jupiter);
+interactionManager.add(saturn);
+interactionManager.add(uranus);
+interactionManager.add(neptune);
 
 // Adding all utils and components
 scene.add(
@@ -120,70 +126,37 @@ function animate() {
 
   renderer.render(scene, camera);
   tick();
+  console.log(coorObj(camera));
 }
 
-// click event on sun mesh
+// click event on plantets mesh
 sun.addEventListener("click", (event) => {
-  let coorSun = coorObj(sun);
-  gsap.to(camera.position, {
-    x: coorSun.x - 900,
-    duration: 3,
-  });
-  gsap.to(camera.position, {
-    y: coorSun.y + 50,
-    duration: 3,
-  });
-  gsap.to(camera.position, {
-    z: coorSun.z - 250,
-    duration: 3,
-  });
+  plOnClick(sun, 900, 50, 250, true);
 });
-
 mercury.addEventListener("click", (event) => {
-  let coorMercury = coorObj(mercury);
-  gsap.to(camera.position, {
-    x: coorMercury.x - 300,
-    duration: 3,
-  });
-  gsap.to(camera.position, {
-    y: coorMercury.y + 50,
-    duration: 3,
-  });
-  gsap.to(camera.position, {
-    z: coorMercury.z - 100,
-    duration: 3,
-  });
+  plOnClick(mercury, 300, 50, 100, true);
 });
 
 venus.addEventListener("click", (event) => {
-  let coorVenus = coorObj(venus);
-  gsap.to(camera.position, {
-    x: coorVenus.x - 150,
-    duration: 3,
-  });
-  gsap.to(camera.position, {
-    y: coorVenus.y + 50,
-    duration: 3,
-  });
-  gsap.to(camera.position, {
-    z: coorVenus.z - 80,
-    duration: 3,
-  });
+  plOnClick(venus, 150, 50, 80, true);
 });
 earth.addEventListener("click", (event) => {
-  let coorEarth = coorObj(earth);
-  gsap.to(camera.position, {
-    x: coorEarth.x - 180,
-    duration: 3,
-  });
-  gsap.to(camera.position, {
-    y: coorEarth.y + 50,
-    duration: 3,
-  });
-  gsap.to(camera.position, {
-    z: coorEarth.z - 80,
-    duration: 3,
-  });
+  plOnClick(earth, 180, 50, 80, true);
+});
+mars.addEventListener("click", (event) => {
+  plOnClick(mars, -200, 40, 30, true);
+});
+jupiter.addEventListener("click", (event) => {
+  plOnClick(jupiter, -250, 40, 50, true);
+});
+saturn.addEventListener("click", (event) => {
+  plOnClick(saturn, -280, 40, 50, true);
+});
+uranus.addEventListener("click", (event) => {
+  plOnClick(uranus, -200, 40, 10, true);
+});
+neptune.addEventListener("click", (event) => {
+  plOnClick(neptune, -200, 40, 10, true);
 });
 animate();
 
@@ -204,4 +177,40 @@ loadingManager.onLoad = function () {
 
 function onTransitionEnd(event) {
   event.target.remove();
+}
+function onShow() {
+  infoId.classList.remove("hidden");
+}
+
+function plOnClick(planets, x, y, z, isUseCoor) {
+  let plCoor = coorObj(planets);
+  if (isUseCoor == true) {
+    gsap.to(camera.position, {
+      x: plCoor.x - x,
+      duration: 3,
+      onComplete: onShow,
+    });
+    gsap.to(camera.position, {
+      y: plCoor.y + y,
+      duration: 3,
+    });
+    gsap.to(camera.position, {
+      z: plCoor.z - z,
+      duration: 3,
+    });
+  } else {
+    gsap.to(camera.position, {
+      x: -x,
+      duration: 3,
+      onComplete: onShow,
+    });
+    gsap.to(camera.position, {
+      y: +y,
+      duration: 3,
+    });
+    gsap.to(camera.position, {
+      z: -z,
+      duration: 3,
+    });
+  }
 }

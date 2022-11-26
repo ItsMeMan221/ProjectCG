@@ -12,7 +12,25 @@
     <section id="loading-screen">
       <div id="loader"></div>
     </section>
-    <canvas id="bg"></canvas>
+    <div
+      class="info absolute border-r-2 border-l-2 border-t-2 border-b-2 rounded-lg bg-slate-100 hidden"
+      style="top: 50%; transform: translate(-50%, -50%); left: 10%"
+      id="info"
+    >
+      <div class="z-40">
+        <div class="h-96 w-96">
+          <p class="text-black text-lg">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt
+            quibusdam eveniet, cumque non adipisci esse aut eius nulla corrupti,
+            voluptate placeat! Qui quo veniam exercitationem doloremque saepe
+            possimus reiciendis, sapiente eaque voluptatibus aliquam incidunt
+            iure, ipsam fugit. Illo cum, enim odit dignissimos nulla dolor
+            doloremque facere laudantium libero adipisci earum!
+          </p>
+        </div>
+      </div>
+    </div>
+    <canvas id="bg" class="z-0"></canvas>
     <script type="module" src="../JS/Planets.js"></script>
   </body>
 </html>
