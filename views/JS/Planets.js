@@ -193,6 +193,9 @@ function onHide() {
 function plOnClick(planets, x, y, z) {
   let plCoor = coorObj(planets);
   if (isClick == false) {
+    controls.enableRotate = false;
+    controls.enablePan = false;
+    controls.enableZoom = false;
     gsap.to(camera.position, {
       x: plCoor.x - x,
       duration: 3,
@@ -226,5 +229,7 @@ function backTo() {
       duration: 3,
     });
     isClick = false;
+    controls.enableRotate = true;
+    controls.enableZoom = true;
   }
 }
