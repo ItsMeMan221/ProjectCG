@@ -14,8 +14,9 @@ import Stats from "stats.js";
 
 const stats = new Stats();
 let isClick = false;
+let clock = new THREE.Clock();
 const back = document.getElementById("back");
-
+let delta = clock.getDelta();
 stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 document.body.appendChild(stats.dom);
 //Import all components
@@ -31,10 +32,64 @@ import {
   neptune,
 } from "../components/ExoPlanets";
 import { stars } from "../components/starPlanets";
+const rotationSpeed = 0.09;
+//Initialized
+const planets = [
+  {
+    pl: mercury,
+    position: 400,
+    rotation: (rotationSpeed * delta) / 0.5,
+    rotateS: 0.00085,
+  },
+  {
+    pl: venus,
+    position: 600,
+    rotation: (rotationSpeed * delta) / 4,
+    rotateS: 0.000225,
+  },
+  {
+    pl: earth,
+    position: 800,
+    rotation: rotationSpeed * delta * 3,
+    rotateS: 0.000188,
+  },
+  {
+    pl: mars,
+    position: 1000,
+    rotation: rotationSpeed * delta * 3.1,
+    rotateS: 0.00012,
+  },
+  {
+    pl: jupiter,
+    position: 1400,
+    rotation: rotationSpeed * delta * 6.3,
+    rotateS: 0.00005,
+  },
+  {
+    pl: saturn,
+    position: 1800,
+    rotation: rotationSpeed * delta * 6,
+    rotateS: 0.00004,
+  },
+  {
+    pl: uranus,
+    position: 2200,
+    rotation: rotationSpeed * delta * 4.5,
+    rotateS: 0.00001,
+  },
+  {
+    pl: neptune,
+    position: 2400,
+    rotation: rotationSpeed * delta * 3.5,
+    rotateS: 0.00001,
+  },
+];
+
+const orbitRadius = [400, 600, 800, 1000, 1400, 1800, 2200, 2400];
+const orbitsObject3D = [];
+const planetsObject3D = [];
 
 let infoId = document.getElementById("info");
-const rotationSpeed = 0.09;
-let clock = new THREE.Clock();
 
 //Angle of planets
 venus.rotation.x = (4.8 / 100) * Math.PI;
@@ -57,6 +112,26 @@ const tick = () => {
 
   stats.end();
 };
+const orbitMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+const createPlanets = () => {
+  planets.forEach((planet, index) => {
+    const orbitGroup = new THREE.Group();
+    const orbit = new THREE.Mesh(
+      new THREE.TorusGeometry(orbitRadius[index], 0.05, 16, 100),
+      orbitMaterial
+    );
+    console.log(planet.pl.position.x);
+    planet.pl.position.x = planet.position;
+    orbitGroup.add(orbit, planet.pl);
+
+    orbit.rotateZ(Math.PI / 2);
+    orbit.rotateY(Math.PI / 2);
+    orbitsObject3D.push(orbitGroup);
+    planetsObject3D.push(planet.pl);
+    scene.add(orbitGroup);
+  });
+};
+createPlanets();
 
 // Init for orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -68,17 +143,6 @@ camera.position.x = -373.55482345690655;
 
 dirLight.position.x = -900;
 pntLight.position.x = -900;
-
-// Object Position
-sun.position.x = -900;
-mercury.position.x = -400;
-venus.position.x = -200;
-earth.position.x = 0;
-mars.position.x = 200;
-jupiter.position.x = 450;
-saturn.position.x = 800;
-uranus.position.x = 1100;
-neptune.position.x = 1300;
 
 // Adding mesh to interaction manager
 interactionManager.add(sun);
@@ -92,37 +156,19 @@ interactionManager.add(uranus);
 interactionManager.add(neptune);
 
 // Adding all utils and components
-scene.add(
-  pntLight,
-  ambLight,
-  hempLight,
-  sun,
-  mercury,
-  venus,
-  earth,
-  mars,
-  jupiter,
-  saturn,
-  uranus,
-  neptune,
-  stars
-);
+scene.add(pntLight, ambLight, hempLight, sun, stars);
 
 // Animate all components
 function animate() {
-  let delta = clock.getDelta();
+  delta = clock.getDelta();
   requestAnimationFrame(animate);
 
-  //Rotation Speed
-  mercury.rotation.y += (rotationSpeed * delta) / 0.5;
-  venus.rotation.y += (rotationSpeed * delta) / 4;
-  earth.rotation.y += rotationSpeed * delta * 3;
-  mars.rotation.y += rotationSpeed * delta * 3.1;
-  jupiter.rotation.y += rotationSpeed * delta * 6.3;
-  saturn.children[0].rotation.y += rotationSpeed * delta * 6;
-  uranus.rotation.y += rotationSpeed * delta * 4.5;
-  neptune.rotation.y += rotationSpeed * delta * 3.5;
-
+  orbitsObject3D.forEach((group, index) => {
+    group.rotation.y += planets[index].rotateS;
+  });
+  planetsObject3D.forEach((planet, index) => {
+    planet.rotation.y += planets[index].rotation;
+  });
   // update controls and interaction manager
   controls.update();
   interactionManager.update();
@@ -131,7 +177,6 @@ function animate() {
 
   renderer.render(scene, camera);
   tick();
-  console.log(coorObj(camera));
 }
 
 // click event on plantets mesh

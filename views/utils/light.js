@@ -10,7 +10,7 @@ export const dirLight = new THREE.DirectionalLight(0xffffff, intensity.dir);
 export const ambLight = new THREE.AmbientLight(0x222222, intensity.amb);
 
 // point light
-const pl = { power: 2, decay: 3 };
+const pl = { power: 2, decay: 1.8 };
 export const pntLight = new THREE.PointLight(
   0xffffff,
   intensity.pnt,
