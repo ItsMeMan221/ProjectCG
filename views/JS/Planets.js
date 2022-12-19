@@ -32,7 +32,9 @@ import {
   neptune,
 } from "../components/ExoPlanets";
 import { stars } from "../components/starPlanets";
+import { starsFront } from "../components/starPlanetsFront";
 const rotationSpeed = 0.09;
+
 //Initialized
 const planets = [
   {
@@ -59,6 +61,7 @@ const planets = [
     rotation: rotationSpeed * delta * 3.1,
     rotateS: 0.00012,
   },
+
   {
     pl: jupiter,
     position: 1400,
@@ -67,25 +70,25 @@ const planets = [
   },
   {
     pl: saturn,
-    position: 1800,
+    position: 2000,
     rotation: rotationSpeed * delta * 6,
     rotateS: 0.00004,
   },
   {
     pl: uranus,
-    position: 2200,
+    position: 2600,
     rotation: rotationSpeed * delta * 4.5,
-    rotateS: 0.00001,
+    rotateS: 0.00002,
   },
   {
     pl: neptune,
-    position: 2400,
+    position: 3000,
     rotation: rotationSpeed * delta * 3.5,
     rotateS: 0.00001,
   },
 ];
 
-const orbitRadius = [400, 600, 800, 1000, 1400, 1800, 2200, 2400];
+const orbitRadius = [400, 600, 800, 1000, 1400, 2000, 2600, 3000];
 const orbitsObject3D = [];
 const planetsObject3D = [];
 
@@ -117,10 +120,9 @@ const createPlanets = () => {
   planets.forEach((planet, index) => {
     const orbitGroup = new THREE.Group();
     const orbit = new THREE.Mesh(
-      new THREE.TorusGeometry(orbitRadius[index], 0.05, 16, 100),
+      new THREE.TorusGeometry(orbitRadius[index], 0.05, 30, 200),
       orbitMaterial
     );
-    console.log(planet.pl.position.x);
     planet.pl.position.x = planet.position;
     orbitGroup.add(orbit, planet.pl);
 
@@ -141,22 +143,11 @@ camera.position.z = 1411.0537416811678;
 camera.position.y = 704.7150454413226;
 camera.position.x = -373.55482345690655;
 
-dirLight.position.x = -900;
-pntLight.position.x = -900;
-
-// Adding mesh to interaction manager
-interactionManager.add(sun);
-interactionManager.add(mercury);
-interactionManager.add(venus);
-interactionManager.add(earth);
-interactionManager.add(mars);
-interactionManager.add(jupiter);
-interactionManager.add(saturn);
-interactionManager.add(uranus);
-interactionManager.add(neptune);
+dirLight.position.x = 0;
+pntLight.position.x = 0;
 
 // Adding all utils and components
-scene.add(pntLight, ambLight, hempLight, sun, stars);
+scene.add(pntLight, ambLight, hempLight, sun, stars, starsFront);
 
 // Animate all components
 function animate() {
@@ -179,35 +170,6 @@ function animate() {
   tick();
 }
 
-// click event on plantets mesh
-sun.addEventListener("click", (event) => {
-  plOnClick(sun, 900, 50, 250);
-});
-mercury.addEventListener("click", (event) => {
-  plOnClick(mercury, 300, 50, 100);
-});
-
-venus.addEventListener("click", (event) => {
-  plOnClick(venus, 150, 50, 80);
-});
-earth.addEventListener("click", (event) => {
-  plOnClick(earth, 180, 50, 80);
-});
-mars.addEventListener("click", (event) => {
-  plOnClick(mars, -200, 40, 30);
-});
-jupiter.addEventListener("click", (event) => {
-  plOnClick(jupiter, -250, 40, 50);
-});
-saturn.addEventListener("click", (event) => {
-  plOnClick(saturn, -280, 40, 50);
-});
-uranus.addEventListener("click", (event) => {
-  plOnClick(uranus, -200, 40, 10);
-});
-neptune.addEventListener("click", (event) => {
-  plOnClick(neptune, -200, 40, 10);
-});
 animate();
 
 function coorObj(obj) {
@@ -228,53 +190,12 @@ loadingManager.onLoad = function () {
 function onTransitionEnd(event) {
   event.target.remove();
 }
-function onShow() {
-  infoId.classList.remove("hidden");
-}
-function onHide() {
-  infoId.classList.add("hidden");
-}
 
-function plOnClick(planets, x, y, z) {
-  let plCoor = coorObj(planets);
-  if (isClick == false) {
-    controls.enableRotate = false;
-    controls.enablePan = false;
-    controls.enableZoom = false;
-    gsap.to(camera.position, {
-      x: plCoor.x - x,
-      duration: 3,
-      onComplete: onShow,
-    });
-    gsap.to(camera.position, {
-      y: plCoor.y + y,
-      duration: 3,
-    });
-    gsap.to(camera.position, {
-      z: plCoor.z - z,
-      duration: 3,
-    });
-    isClick = true;
-  }
-}
-back.addEventListener("click", backTo);
-function backTo() {
-  if (isClick == true) {
-    onHide();
-    gsap.to(camera.position, {
-      x: -373.55482345690655,
-      duration: 3,
-    });
-    gsap.to(camera.position, {
-      y: 704.7150454413226,
-      duration: 3,
-    });
-    gsap.to(camera.position, {
-      z: 1411.0537416811678,
-      duration: 3,
-    });
-    isClick = false;
-    controls.enableRotate = true;
-    controls.enableZoom = true;
-  }
+window.addEventListener("resize", onWindowResize, false);
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
 }

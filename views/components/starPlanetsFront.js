@@ -7,11 +7,11 @@ const starVertices = [];
 for (let i = 0; i < 1000; i++) {
   const x = (Math.random() - 0.5) * 8000;
   const y = (Math.random() - 0.5) * 8000;
-  const z = -Math.random() * 3300;
+  const z = (Math.random() - 0) * 3300;
   starVertices.push(x, y, z);
 }
 starGeometry.setAttribute(
   "position",
   new Float32BufferAttribute(starVertices, 3)
 );
-export const stars = new THREE.Points(starGeometry, starMaterial);
+export const starsFront = new THREE.Points(starGeometry, starMaterial);
