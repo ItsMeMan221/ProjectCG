@@ -86,3 +86,7 @@ body {
     transform: rotate(360deg);
   }
 }
+.list-item:hover {
+  background-color: aliceblue;
+  color: #000000;
+}

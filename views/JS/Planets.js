@@ -9,16 +9,8 @@ import { scene } from "../utils/scene";
 import { camera } from "../utils/camera";
 import { dirLight, ambLight, pntLight, hempLight } from "../utils/light";
 import { loadingManager } from "../utils/LoadingManager";
-
+import data from "../../planets.json" assert { type: "json" };
 import Stats from "stats.js";
-
-const stats = new Stats();
-let isClick = false;
-let clock = new THREE.Clock();
-const back = document.getElementById("back");
-let delta = clock.getDelta();
-stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild(stats.dom);
 //Import all components
 import { sun } from "../components/sun";
 import {
@@ -34,6 +26,12 @@ import {
 import { stars } from "../components/starPlanets";
 import { starsFront } from "../components/starPlanetsFront";
 const rotationSpeed = 0.09;
+
+const stats = new Stats();
+let clock = new THREE.Clock();
+let delta = clock.getDelta();
+stats.showPanel(0);
+// document.body.appendChild(stats.dom);
 
 //Initialized
 const planets = [
@@ -92,8 +90,6 @@ const orbitRadius = [400, 600, 800, 1000, 1400, 2000, 2600, 3000];
 const orbitsObject3D = [];
 const planetsObject3D = [];
 
-let infoId = document.getElementById("info");
-
 //Angle of planets
 venus.rotation.x = (4.8 / 100) * Math.PI;
 earth.rotation.x = (13 / 100) * Math.PI;
@@ -137,7 +133,13 @@ createPlanets();
 
 // Init for orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enablePan = false;
+controls.enablePan = true;
+controls.maxDistance = 3000;
+controls.minDistance = 0;
+controls.enableDamping = true;
+controls.minPolarAngle = 0.8;
+controls.maxPolarAngle = 2.4;
+controls.dampingFactor = 0.07;
 //Set all position of utils and components
 camera.position.z = 1411.0537416811678;
 camera.position.y = 704.7150454413226;
@@ -172,14 +174,6 @@ function animate() {
 
 animate();
 
-function coorObj(obj) {
-  let pl = new THREE.Vector3();
-
-  pl = obj.position;
-
-  return pl;
-}
-
 //Loading Manager
 loadingManager.onLoad = function () {
   const loadingScreen = document.getElementById("loading-screen");
@@ -198,4 +192,51 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// Description Box
+$(document).ready(function () {
+  getAllData();
+});
+
+function getAllData() {
+  let items = "";
+  $.ajax({
+    type: "POST",
+    url: "../../planets.json",
+    dataType: "json",
+    success: function (response) {
+      $.each(response, function (i, item) {
+        items += `<div class = "planetName${i} text-white cursor-pointer list-item">
+          <div class="flex-row justify-between w-auto border-2" id="pl-content${i}"> 
+            <p class=" text-lg ml-2  ">${item.name}</p>
+          </div>
+        </div>`;
+      });
+      $("#planetsInfo").html(items);
+      let subItem = "";
+      for (let i = 0; i < data.length; i++) {
+        $(".planetName" + i).click(function (e) {
+          e.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "../../planets.json",
+            dataType: "json",
+            success: function (response) {
+              $.each(response, function (j, subitem) {
+                if (i == j) {
+                  subItem = `<div class= "border-2 m-3 desc${i}"><p class="text-sm  ml-4 mb-3 mt-2 mr-4 ">${subitem.description}</p></div>`;
+                  if ($(".desc" + i).length) {
+                    $(".desc" + i).remove();
+                  } else {
+                    $("#pl-content" + i).append(subItem);
+                  }
+                }
+              });
+            },
+          });
+        });
+      }
+    },
+  });
 }
